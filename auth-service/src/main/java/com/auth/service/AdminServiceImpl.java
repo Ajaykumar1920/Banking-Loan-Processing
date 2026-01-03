@@ -2,6 +2,8 @@ package com.auth.service;
 
 import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.auth.dto.AdminUserResponse;
 import com.auth.dto.CreateUserRequest;
 import com.auth.exception.UserAlreadyExistsException;
@@ -10,6 +12,7 @@ import com.auth.model.User;
 import com.auth.model.UserStatus;
 import com.auth.repository.UserRepository;
 
+@Service
 public class AdminServiceImpl implements AdminService{
 	
 	private final UserRepository userRepository;
