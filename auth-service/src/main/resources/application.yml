@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: auth-service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/auth_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: Root123$
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+      # Shows SQL logs in the console (useful for debugging)
+    show-sql: true
+    properties:
+       hibernate:
+         # Optional: Explicitly set dialect if auto-detection fails
+         dialect: org.hibernate.dialect.MySQLDialect
+         "[format_sql]": true
+
+server:
+  port: 8084
