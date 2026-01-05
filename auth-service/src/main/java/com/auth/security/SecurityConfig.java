@@ -11,6 +11,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableMethodSecurity
@@ -20,9 +21,10 @@ public class SecurityConfig {
 //	public SecurityConfig(CustomUserDetailsService userDetailsService) {
 //		this.userDetailsService = userDetailsService;
 //	}
-	private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-	public SecurityConfig(RestAuthenticationEntryPoint restAuthenticationEntryPoint) {
-	    this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+//	private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+	private final GatewayAuthenticationFilter gatewayAuthenticationFilter;
+	public SecurityConfig(GatewayAuthenticationFilter gatewayAuthenticationFilter) {
+	    this.gatewayAuthenticationFilter = gatewayAuthenticationFilter;
 	}
 	
 	@Bean
@@ -38,9 +40,13 @@ public class SecurityConfig {
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             )
-            .exceptionHandling(ex -> 
-            ex.authenticationEntryPoint(restAuthenticationEntryPoint)
-            )
+//            .exceptionHandling(ex -> 
+//            ex.authenticationEntryPoint(restAuthenticationEntryPoint)
+//            )
+            .addFilterBefore(
+                    gatewayAuthenticationFilter,
+                    UsernamePasswordAuthenticationFilter.class
+                )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/login", "/auth/register").permitAll()
                 .requestMatchers("/auth/admin/**").hasRole("ADMIN")
