@@ -52,4 +52,14 @@ public class AdminController {
         adminService.disableUser(id, principal.getName());
         return ResponseEntity.ok("User disabled successfully");
     }
+    
+   // Enable a user
+    @PutMapping("/users/{id}/enable")
+    public ResponseEntity<String> enableUser(
+            @PathVariable Long id,
+            Principal principal) {
+
+        adminService.enableUser(id, principal.getName());
+        return ResponseEntity.ok("User enabled successfully");
+    }
 }

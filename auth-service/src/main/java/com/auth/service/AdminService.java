@@ -11,4 +11,6 @@ public interface AdminService {
     List<AdminUserResponse> getAllUsers();
 
     void disableUser(Long userId, String currentAdminUsername);
+    
+    void enableUser(Long userId, String curentAdminUsername);
 }

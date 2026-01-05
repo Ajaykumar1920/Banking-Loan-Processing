@@ -85,4 +85,18 @@ public class AdminServiceImpl implements AdminService{
         userRepository.save(user);
     }
     
+    @Override
+    public void enableUser(Long userId, String currentAdminUsername) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found"));
+        // Prevent admin disabling self
+//        if (user.getUsername().equals(currentAdminUsername)) {
+//            throw new IllegalArgumentException(
+//                "Admin cannot disable self");
+//        }
+        user.setStatus(UserStatus.ACTIVE);
+        userRepository.save(user);
+    }
+    
 }
