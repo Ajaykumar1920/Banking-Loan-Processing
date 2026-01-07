@@ -16,34 +16,32 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
-//	private final CustomUserDetailsService userDetailsService;
-//	
-//	public SecurityConfig(CustomUserDetailsService userDetailsService) {
-//		this.userDetailsService = userDetailsService;
-//	}
-//	private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
 	private final GatewayAuthenticationFilter gatewayAuthenticationFilter;
 	public SecurityConfig(GatewayAuthenticationFilter gatewayAuthenticationFilter) {
 	    this.gatewayAuthenticationFilter = gatewayAuthenticationFilter;
 	}
-	
+
 	@Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-	// Core security rules
+
+	// Core security rules:
+	/*
+	defines how every HTTP request to auth-service is secured,
+	who is allowed in, and how identity is attached to the request
+	*/
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+    		HttpSecurity http) throws Exception {
 
         http
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            )
-//            .exceptionHandling(ex -> 
-//            ex.authenticationEntryPoint(restAuthenticationEntryPoint)
-//            )
-            .addFilterBefore(
+				)
+				.addFilterBefore(
                     gatewayAuthenticationFilter,
                     UsernamePasswordAuthenticationFilter.class
                 )
@@ -55,20 +53,17 @@ public class SecurityConfig {
 
         return http.build();
     }
-    // AuthenticationManager for login
+    /*
+     AuthenticationManager for login
+    	provided by Spring Security
+    	Orchestrates authentication
+    	Calls UserDetailsService automatically
+    	This is where CustomUserDetailsService comes into play.
+    */
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-    // Authentication provider (DB + BCrypt)
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider(
-//            PasswordEncoder passwordEncoder) {
-//    	
-//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-//        provider.setUserDetailsService(userDetailsService);
-//        provider.setPasswordEncoder(passwordEncoder);
-//        return provider;
-//    }
+
 }

@@ -9,7 +9,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtUtil {
-	private final String SECRET_KEY = "this-is-a-very-secure-secret-key-with-32-bytes-minimum"; // move to env later
+	
+	private final String SECRET_KEY = 
+			"this-is-a-very-secure-secret-key-with-32-bytes-minimum"; // move to env later
 	private final long EXPIRATION = 1000 * 60 * 60 * 24; // 24 hours
 
 	private final Key key = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
