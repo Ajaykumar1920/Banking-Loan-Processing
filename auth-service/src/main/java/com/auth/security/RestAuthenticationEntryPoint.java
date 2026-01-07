@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
+	
+	// when CustomUserDetailsService.loadUserByUsername() fails:
+		// spring calls commence(...)
     @Override
     public void commence(
             HttpServletRequest request,

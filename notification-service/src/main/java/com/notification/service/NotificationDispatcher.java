@@ -7,7 +7,7 @@ import com.notification.model.NotificationEvent;
 
 @Service
 public class NotificationDispatcher {
-	
+
 	public String buildMessage(NotificationRequest request) {
 
         if (request.getMessage() != null) {
@@ -24,6 +24,9 @@ public class NotificationDispatcher {
 
             case ACCOUNT_DISABLED ->
                 "Your account has been disabled. Please contact support.";
+
+            case ACCOUNT_ENABLED ->
+            	"Your account has been Enabled.";
 
             case LOAN_APPLIED ->
                 "Your loan application (" + request.getReferenceId() +

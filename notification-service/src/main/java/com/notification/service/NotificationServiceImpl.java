@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.notification.dto.NotificationRequest;
 
+import jakarta.annotation.PostConstruct;
+
 @Service
 public class NotificationServiceImpl implements NotificationService {
 
@@ -28,5 +30,11 @@ public class NotificationServiceImpl implements NotificationService {
 		mail.setText(message);
 
 		mailSender.send(mail);
+	}
+	
+	@PostConstruct
+	public void debugEnv() {
+	    System.out.println("ENV MAIL_USERNAME = " + System.getenv("MAIL_USERNAME"));
+	    System.out.println("ENV MAIL_PASSWORD present = " + (System.getenv("MAIL_PASSWORD") != null));
 	}
 }
