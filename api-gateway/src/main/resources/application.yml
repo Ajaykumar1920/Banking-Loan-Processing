@@ -11,3 +11,13 @@ spring:
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=/auth/**
+
+        - id: customer-service
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/customer/**
+
+        - id: loan-service
+          uri: lb://LOAN-SERVICE
+          predicates:
+            - Path=/loan/**
