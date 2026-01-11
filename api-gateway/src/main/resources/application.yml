@@ -21,3 +21,8 @@ spring:
           uri: lb://LOAN-SERVICE
           predicates:
             - Path=/loan/**
+
+        - id: credit-evaluation-service
+          uri: lb://CREDIT-EVALUATION-SERVICE
+          predicates:
+            - Path=/loan/**
